@@ -72,12 +72,12 @@ public class VehiculoGUI extends JFrame{
                 String modelo = modeloField.getText();
                 String placas = placaField.getText();
                 String color = colorField.getText();
-                int anio = Integer.parseInt(añoField.getText());
+                int año = Integer.parseInt(añoField.getText());
                 int kilometraje = Integer.parseInt(kmField.getText());
                 int rendimiento = Integer.parseInt(rendimientoField.getText());
                 String poliza = polizaField.getText();
 
-                ConexionDB.insertarVehiculo(marca, modelo, placas, color, anio, kilometraje, rendimiento, poliza);
+                ConexionDB.insertarVehiculo(marca, modelo, placas, color, año, kilometraje, rendimiento, poliza);
 
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Error: Asegúrate de ingresar valores numéricos válidos en Año, Kilometraje y Rendimiento.",

@@ -1,7 +1,6 @@
 package SistemadeRegistro;
-import javax.swing.SwingUtilities;
-
 import SistemadeRegistro.SelecciondeUsuario.SeleccióndeUsuarioGUI;
+import javax.swing.SwingUtilities;
 
 public class SistemadeRegistro {
     
@@ -11,6 +10,7 @@ public class SistemadeRegistro {
             @Override
             public void run() {
                 new SeleccióndeUsuarioGUI().setVisible(true);
+            
             }
         });
     }

@@ -1,13 +1,12 @@
 package SistemadeRegistro.RegistrodeVehiculos;
-import javax.swing.*;
-
+import SistemadeRegistro.ConexionDB;
 import SistemadeRegistro.SelecciondeRuta.SelecciondeRutaGUI;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.*;
 
-public class VehiculoGUI  extends JFrame{
+public class VehiculoGUI extends JFrame{
     private Vehiculo vehiculo;
     private JTextField marcaField, añoField, modeloField, kmField, rendimientoField, placaField, colorField, polizaField;
     private JTextArea resultadoArea;
@@ -68,6 +67,27 @@ public class VehiculoGUI  extends JFrame{
         registrarBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            try{
+                String marca = marcaField.getText();
+                String modelo = modeloField.getText();
+                String placas = placaField.getText();
+                String color = colorField.getText();
+                int anio = Integer.parseInt(añoField.getText());
+                int kilometraje = Integer.parseInt(kmField.getText());
+                int rendimiento = Integer.parseInt(rendimientoField.getText());
+                String poliza = polizaField.getText();
+
+                ConexionDB.insertarVehiculo(marca, modelo, placas, color, anio, kilometraje, rendimiento, poliza);
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Error: Asegúrate de ingresar valores numéricos válidos en Año, Kilometraje y Rendimiento.",
+                                              "Error de formato", JOptionPane.ERROR_MESSAGE);
+                return;
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error al guardar en la base de datos:\n" + ex.getMessage(),
+                                              "Error de Base de Datos", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
                 registrarVehiculo();
                 setVisible(false);
 

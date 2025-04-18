@@ -1,5 +1,6 @@
 package SistemadeRegistro.SelecciondeUsuario;
-
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,44 +18,49 @@ public class SeleccióndeUsuarioGUI extends JFrame {
 
     public SeleccióndeUsuarioGUI() {
         setTitle("Sistema de Registro - Transporte UDLAP");
-        setSize(500, 200);
+        setSize(500, 170);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(2, 2, 5, 5));
-
+        setLayout(new GridLayout(2, 2, 5, 5)); // 2 filas, 2 columnas, separación de 5px
+        
         displayLabel = new JLabel("Seleccione si es Chofer o Estudiante", SwingConstants.CENTER);
         add(displayLabel);
         displayLabel = new JLabel("", SwingConstants.CENTER);
         add(displayLabel);
-
-        JButton ChoferButton = new JButton("Chofer");
-        add(ChoferButton);
-
-        JButton EstudianteButton = new JButton("Estudiante");
-        add(EstudianteButton);
-
         
-        EstudianteButton.addActionListener(new ActionListener() {
+        // Botón Chofer
+        JButton choferButton = new JButton("Chofer");
+        choferButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        choferButton.setBackground(new Color(46, 204, 113)); // Verde
+        choferButton.setForeground(Color.WHITE);
+        add(choferButton);
+
+        // Botón Estudiante
+        JButton estudianteButton = new JButton("Estudiante");
+        estudianteButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        estudianteButton.setBackground(new Color(243, 156, 18)); // Naranja
+        estudianteButton.setForeground(Color.WHITE);
+        add(estudianteButton);
+
+        // Acción botones
+        estudianteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-
-                ControlFrameEstudiante EstudianteGUI = new ControlFrameEstudiante(SeleccióndeUsuarioGUI.this);
-                EstudianteGUI.setVisible(true);
+                ControlFrameEstudiante estudianteGUI = new ControlFrameEstudiante(SeleccióndeUsuarioGUI.this);
+                estudianteGUI.setVisible(true);
             }
         });
-        ChoferButton.addActionListener(new ActionListener() {
+
+        choferButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-
-                ControlFrameChofer EstudianteGUI = new ControlFrameChofer(SeleccióndeUsuarioGUI.this);
-                EstudianteGUI.setVisible(true);
+                ControlFrameChofer choferGUI = new ControlFrameChofer(SeleccióndeUsuarioGUI.this);
+                choferGUI.setVisible(true);
             }
         });
 
         setVisible(true);
     }
-
-
-}
+    }

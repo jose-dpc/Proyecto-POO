@@ -47,11 +47,10 @@ public class Chofer {
     }
 
     public void setContrasena(String contrasena) {
-        if (contrasena != null && contrasena.length() >= 6) {
+        if (contrasena != null && contrasena.length() >= 8) {
             this.contrasena = contrasena;
         } else {
-            System.out.println("Contraseña inválida. Debe tener al menos 6 caracteres.");
-            this.contrasena = "sin_contrasena";
+            throw new IllegalArgumentException("La contraseña debe tener al menos 8 caracteres.");
         }
     }
 

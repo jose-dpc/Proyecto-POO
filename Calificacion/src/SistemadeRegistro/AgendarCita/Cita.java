@@ -15,45 +15,65 @@ public class Cita extends JFrame {
     private DateHandler dateHandler;
 
     public Cita(JFrame parentFrame) {
-        dateHandler = new DateHandler(1, 1, 2024);
+        dateHandler = new DateHandler(1, 1, 2025);
         frame = new JFrame("Registro de Citas");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
-        frame.setLayout(new BorderLayout());
+        frame.setSize(500, 350);
+        frame.setLocationRelativeTo(null);
+        frame.setLayout(new BorderLayout(10, 10));
 
-        JPanel panelCampos = new JPanel(new GridLayout(4, 2, 5, 5));
-        JPanel panelBotones = new JPanel(new GridLayout(1, 3, 5, 5));
+        JPanel panelCampos = new JPanel(new GridLayout(4, 2, 10, 10));
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
-        panelCampos.add(new JLabel("Nombre Completo:"));
+        JLabel lblNombre = new JLabel("Nombre Completo:");
+        lblNombre.setFont(new Font("SansSerif", Font.BOLD, 14));
         txtNombre = new JTextField();
+        txtNombre.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        panelCampos.add(lblNombre);
         panelCampos.add(txtNombre);
 
-        panelCampos.add(new JLabel("Día:"));
+        JLabel lblDia = new JLabel("Día:");
+        lblDia.setFont(new Font("SansSerif", Font.BOLD, 14));
         txtDia = new JTextField(Integer.toString(dateHandler.getDia()));
+        txtDia.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        panelCampos.add(lblDia);
         panelCampos.add(txtDia);
 
-        panelCampos.add(new JLabel("Mes:"));
+        JLabel lblMes = new JLabel("Mes:");
+        lblMes.setFont(new Font("SansSerif", Font.BOLD, 14));
         txtMes = new JTextField(Integer.toString(dateHandler.getMes()));
+        txtMes.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        panelCampos.add(lblMes);
         panelCampos.add(txtMes);
 
-        panelCampos.add(new JLabel("Año:"));
+        JLabel lblAnio = new JLabel("Año:");
+        lblAnio.setFont(new Font("SansSerif", Font.BOLD, 14));
         txtAnio = new JTextField(Integer.toString(dateHandler.getAnio()));
+        txtAnio.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        panelCampos.add(lblAnio);
         panelCampos.add(txtAnio);
 
         lblFecha = new JLabel("Fecha: " + dateHandler.getFecha(), SwingConstants.CENTER);
+        lblFecha.setFont(new Font("SansSerif", Font.BOLD, 16));
+        lblFecha.setForeground(new Color(34, 139, 34));
+
         lblError = new JLabel("", SwingConstants.CENTER);
+        lblError.setFont(new Font("SansSerif", Font.PLAIN, 13));
         lblError.setForeground(Color.RED);
 
-
         JButton btnSiguiente = new JButton("Siguiente");
+        btnSiguiente.setFont(new Font("SansSerif", Font.BOLD, 14));
+        btnSiguiente.setBackground(new Color(255, 140, 0));
+        btnSiguiente.setForeground(Color.WHITE);
+        btnSiguiente.setPreferredSize(new Dimension(150, 40));
+
         btnSiguiente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(frame, "✔ Cita Agendada", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
                 setVisible(false);
-
-                VehiculoGUI EstudianteGUI = new VehiculoGUI(Cita.this);
-                EstudianteGUI.setVisible(true);
+                VehiculoGUI siguienteVentana = new VehiculoGUI(Cita.this);
+                siguienteVentana.setVisible(true);
             }
         });
 
@@ -63,10 +83,10 @@ public class Cita extends JFrame {
         txtMes.addActionListener(new DateUpdater());
         txtAnio.addActionListener(new DateUpdater());
 
-        frame.add(panelCampos, BorderLayout.CENTER);
         frame.add(lblFecha, BorderLayout.NORTH);
-        frame.add(panelBotones, BorderLayout.SOUTH);
+        frame.add(panelCampos, BorderLayout.CENTER);
         frame.add(lblError, BorderLayout.WEST);
+        frame.add(panelBotones, BorderLayout.SOUTH);
 
         frame.setVisible(true);
     }
@@ -78,7 +98,6 @@ public class Cita extends JFrame {
         lblFecha.setText("Fecha: " + dateHandler.getFecha());
     }
 
-
     private class DateUpdater implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             try {
@@ -87,6 +106,7 @@ public class Cita extends JFrame {
                 int anio = Integer.parseInt(txtAnio.getText());
                 dateHandler.setFecha(dia, mes, anio);
                 actualizarFecha();
+                lblError.setText("");
             } catch (Exception ex) {
                 lblError.setText("Error: Fecha inválida");
             }

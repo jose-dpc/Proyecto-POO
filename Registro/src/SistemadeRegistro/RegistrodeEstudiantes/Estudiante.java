@@ -1,5 +1,4 @@
 package SistemadeRegistro.RegistrodeEstudiantes;
-
 public class Estudiante {
     private String id;
     private String contrasena;
@@ -15,7 +14,7 @@ public class Estudiante {
     // Constructor con parámetros
     public Estudiante(String id, String contrasena, String nombre) {
         setId(id);
-        setContrasena(contrasena); // Aquí lanza error si es insegura
+        setContrasena(contrasena);
         setNombre(nombre);
     }
 
@@ -42,15 +41,17 @@ public class Estudiante {
         if (id != null && !id.isEmpty()) {
             this.id = id;
         } else {
-            throw new IllegalArgumentException("ID no puede estar vacío.");
+            System.out.println("ID no válido. Asignando ID por defecto.");
+            this.id = "Desconocido";
         }
     }
 
     public void setContrasena(String contrasena) {
-        if (contrasena != null && contrasena.length() >= 8) {
+        if (contrasena != null && contrasena.length() >= 6) {
             this.contrasena = contrasena;
         } else {
-            throw new IllegalArgumentException("La contraseña debe tener al menos 8 caracteres.");
+            System.out.println("Contraseña inválida. Debe tener al menos 6 caracteres.");
+            this.contrasena = "sin_contrasena";
         }
     }
 
@@ -58,11 +59,12 @@ public class Estudiante {
         if (nombre != null && !nombre.isEmpty()) {
             this.nombre = nombre;
         } else {
-            throw new IllegalArgumentException("Nombre no puede estar vacío.");
+            System.out.println("Nombre inválido. Asignando nombre por defecto.");
+            this.nombre = "Desconocido";
         }
     }
 
-    // Ya no se necesita este método si usas el setter como validación directa
+    // Método que indica si la contraseña es segura (al menos 8 caracteres)
     public boolean contrasenaSegura() {
         return contrasena.length() >= 8;
     }

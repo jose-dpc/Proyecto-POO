@@ -1,101 +1,124 @@
 package SistemadeRegistro.RegistrodeChofer;
-import java.awt.*;
-import javax.swing.*;
 
-import SistemadeRegistro.AgendarCita.Cita;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ControlFrameChofer extends JFrame{
-    private Chofer chofer;
-    private JTextField idField, contrasenaField, nombreField;
-    private JLabel displayLabel;
+public class ControlFrameChofer extends JFrame {
+    private Chofer choferActual; // Chofer actualmente autenticado
 
-    public ControlFrameChofer(JFrame parentFrame) {
-        setTitle("Registro de Chofer");
-        setSize(600, 300);
+    public ControlFrameChofer() {
+        inicializarInterfaz(); // método donde configuras tu GUI de registro
+    }
+    
+    public ControlFrameChofer(Chofer chofer) {
+        this.choferActual = chofer;
+        inicializarInterfaz();
+    }
+
+    private void inicializarInterfaz() {
+        setTitle("Panel de Chofer - Transporte UDLAP");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Centrar ventana
-        setLayout(new GridLayout(5, 2, 10, 10));
-        getContentPane().setBackground(new Color(240, 255, 240)); // Verde claro
+        setSize(400, 300);
+        setLocationRelativeTo(null);
 
-        Font fuente = new Font("Arial", Font.PLAIN, 14);
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(5, 1, 10, 10)); // 5 botones, 10px separación
 
-        JLabel idLabel = new JLabel("Correo:");
-        idLabel.setFont(fuente);
-        add(idLabel);
-        idField = new JTextField();
-        idField.setFont(fuente);
-        add(idField);
+        // Crear botones
+        JButton btnRegistrarVehiculo = new JButton("Registrar Vehículo");
+        JButton btnCrearRuta = new JButton("Crear Ruta Nueva");
+        JButton btnUnirseRuta = new JButton("Unirse a Ruta Existente");
+        JButton btnEliminarRuta = new JButton("Eliminar Ruta");
+        JButton btnCerrarSesion = new JButton("Cerrar Sesión");
 
-        JLabel contrasenaLabel = new JLabel("Contraseña:");
-        contrasenaLabel.setFont(fuente);
-        add(contrasenaLabel);
-        contrasenaField = new JTextField();
-        contrasenaField.setFont(fuente);
-        add(contrasenaField);
-
-        JLabel nombreLabel = new JLabel("Nombre:");
-        nombreLabel.setFont(fuente);
-        add(nombreLabel);
-        nombreField = new JTextField();
-        nombreField.setFont(fuente);
-        add(nombreField);
-
-        displayLabel = new JLabel("Registro del Chofer", SwingConstants.CENTER);
-        displayLabel.setFont(new Font("Arial", Font.BOLD, 10));
-        add(displayLabel);
-
-        JButton verificarButton = new JButton("Verificar y Continuar");
-        verificarButton.setFont(fuente);
-        verificarButton.setBackground(new Color(255, 165, 0)); // Naranja
-        verificarButton.setForeground(Color.WHITE);
-        add(verificarButton);
-
-        verificarButton.addActionListener(new ActionListener() {
+        // Agregar listeners a botones
+        btnRegistrarVehiculo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                verificarChofer();
+                if (choferAutorizado()) {
+                    abrirVentanaRegistroVehiculo();
+                }
             }
         });
 
+        btnCrearRuta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (choferAutorizado()) {
+                    abrirVentanaCrearRuta();
+                }
+            }
+        });
+
+        btnUnirseRuta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (choferAutorizado()) {
+                    abrirVentanaUnirseRuta();
+                }
+            }
+        });
+
+        btnEliminarRuta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (choferAutorizado()) {
+                    abrirVentanaEliminarRuta();
+                }
+            }
+        });
+
+        btnCerrarSesion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cerrarSesion();
+            }
+        });
+
+        // Agregar los botones al panel
+        panel.add(btnRegistrarVehiculo);
+        panel.add(btnCrearRuta);
+        panel.add(btnUnirseRuta);
+        panel.add(btnEliminarRuta);
+        panel.add(btnCerrarSesion);
+
+        add(panel);
         setVisible(true);
     }
 
-    private void verificarChofer() {
-        try {
-            String id = idField.getText().trim();
-            String contrasena = contrasenaField.getText().trim();
-            String nombre = nombreField.getText().trim();
-
-            if (id.isEmpty()) {
-                throw new IllegalArgumentException("El correo no puede estar vacío.");
-            }
-
-            if (nombre.isEmpty()) {
-                throw new IllegalArgumentException("El nombre no puede estar vacío.");
-            }
-
-            chofer = new Chofer(id, contrasena, nombre);
-
-            if (!chofer.contrasenaSegura()) {
-                throw new IllegalArgumentException("La contraseña debe tener al menos 8 caracteres.");
-            }
-
-            // Mensaje de éxito
-            JOptionPane.showMessageDialog(this, "Chofer registrado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-            // Pasar a la siguiente ventana
-            setVisible(false);
-            new Cita(this).setVisible(true);
-
-        } catch (IllegalArgumentException ex) {
-            displayLabel.setText("⚠ " + ex.getMessage());
-            displayLabel.setForeground(Color.RED);
-        } catch (Exception ex) {
-            displayLabel.setText("Error inesperado: " + ex.getMessage());
-            displayLabel.setForeground(Color.RED);
+    private boolean choferAutorizado() {
+        if (!choferActual.getEstado().equalsIgnoreCase("Aprobado")) {
+            JOptionPane.showMessageDialog(this, "No puedes continuar. Debes asistir a tu entrevista y ser aprobado primero.");
+            return false;
         }
+        return true;
     }
 
+    private void abrirVentanaRegistroVehiculo() {
+        // Aquí se abriría la ventana real de registro de vehículo
+        JOptionPane.showMessageDialog(this, "Aquí se abriría la ventana de registro de vehículo.");
+    }
+
+    private void abrirVentanaCrearRuta() {
+        // Aquí se abriría la ventana real de crear una nueva ruta
+        JOptionPane.showMessageDialog(this, "Aquí se abriría la ventana para crear una nueva ruta.");
+    }
+
+    private void abrirVentanaUnirseRuta() {
+        // Aquí se abriría la ventana real para unirse a una ruta existente
+        JOptionPane.showMessageDialog(this, "Aquí se abriría la ventana para unirse a una ruta existente.");
+    }
+
+    private void abrirVentanaEliminarRuta() {
+        // Aquí se abriría la ventana real para eliminar una ruta
+        JOptionPane.showMessageDialog(this, "Aquí se abriría la ventana para eliminar una ruta.");
+    }
+
+    private void cerrarSesion() {
+        JOptionPane.showMessageDialog(this, "Sesión cerrada. Regresando al menú principal.");
+        dispose();
+        // Aquí deberías redirigir a la pantalla de login o menú principal
+    }
 }

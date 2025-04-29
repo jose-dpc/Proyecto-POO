@@ -1,70 +1,38 @@
 package SistemadeRegistro.RegistrodeChofer;
+
 public class Chofer {
-    private String correo;
-    private String contrasena;
     private String nombre;
+    private int telefono;
+    private String correo;
+    private String curp;
+    private String estado; // "Pendiente", "Aprobado", "Rechazado"
 
-    // Constructor por defecto
-    public Chofer() {
-        this.correo = "Desconocido";
-        this.contrasena = "sin_contrasena";
-        this.nombre = "Desconocido";
+    public Chofer(String nombre, String correo, int telefono, String curp) {
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.curp = curp;
+        this.estado = "Pendiente"; // Al registrarse, siempre "Pendiente"
     }
 
-    // Constructor con parámetros
-    public Chofer(String correo, String contrasena, String nombre) {
-        setId(correo);
-        setContrasena(contrasena);
-        setNombre(nombre);
-    }
+    // Getters y Setters
+    public String getNombre() { 
+        return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    // Métodos getter
-    public String getId() {
-        return correo;
-    }
+    public int getTelefono() { 
+        return telefono; }
+    public void setTelefono(int telefono) { this.telefono = telefono; }
 
-    public String getContrasena() {
-        return contrasena;
-    }
+    public String getCorreo() { 
+        return correo; }
+    public void setCorreo(String correo) { this.correo = correo; }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public String getCurp() { 
+        return curp; }
+    public void setCurp(String curp) { this.curp = curp; }
 
-    // Método toString para representar al estudiante como texto
-    public String toString() {
-        return String.format("ID: %s, Nombre: %s", correo, nombre);
-    }
-
-    // Métodos setter con validación
-    public void setId(String correo) {
-        if (correo != null && !correo.isEmpty()) {
-            this.correo = correo;
-        } else {
-            System.out.println("ID no válido. Asignando ID por defecto.");
-            this.correo = "Desconocido";
-        }
-    }
-
-    public void setContrasena(String contrasena) {
-        if (contrasena != null && contrasena.length() >= 8) {
-            this.contrasena = contrasena;
-        } else {
-            throw new IllegalArgumentException("La contraseña debe tener al menos 8 caracteres.");
-        }
-    }
-
-    public void setNombre(String nombre) {
-        if (nombre != null && !nombre.isEmpty()) {
-            this.nombre = nombre;
-        } else {
-            System.out.println("Nombre inválido. Asignando nombre por defecto.");
-            this.nombre = "Desconocido";
-        }
-    }
-
-    // Método que indica si la contraseña es segura (al menos 8 caracteres)
-    public boolean contrasenaSegura() {
-        return contrasena.length() >= 8;
-    }
+    public String getEstado() { 
+        return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
 }

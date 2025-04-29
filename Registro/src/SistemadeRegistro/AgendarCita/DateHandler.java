@@ -1,44 +1,35 @@
 package SistemadeRegistro.AgendarCita;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.YearMonth;
 
+public class DateHandler {
 
-class DateHandler {
-    private LocalDate fecha;
-
-    public DateHandler(int dia, int mes, int anio) {
-        setFecha(dia, mes, anio);
+    public static boolean esFechaValida(LocalDate fecha) {
+        return !fecha.isBefore(LocalDate.now());
     }
 
-    public void setFecha(int dia, int mes, int anio) {
-        try {
-            fecha = LocalDate.of(anio, mes, dia);
-        } catch (Exception e) {
-            fecha = LocalDate.now();
-        }
+    public static boolean esHoraValida(LocalTime hora) {
+        LocalTime inicio = LocalTime.of(9, 0);
+        LocalTime fin = LocalTime.of(17, 0);
+        return !hora.isBefore(inicio) && !hora.isAfter(fin);
     }
 
-    public void siguienteDia() {
-        fecha = fecha.plusDays(1);
+    public static boolean esDiaLaboral(LocalDate fecha) {
+        DayOfWeek dia = fecha.getDayOfWeek();
+        return dia != DayOfWeek.SATURDAY && dia != DayOfWeek.SUNDAY;
     }
 
-    public void diaAnterior() {
-        fecha = fecha.minusDays(1);
+    // obtener número de días que tiene un mes en un año específico
+    public static int obtenerDiasDelMes(int anio, int mes) {
+        YearMonth yearMonth = YearMonth.of(anio, mes);
+        return yearMonth.lengthOfMonth(); // Devuelve 28, 29, 30 o 31 según el mes y año
     }
 
-    public int getDia() {
-        return fecha.getDayOfMonth();
-    }
-
-    public int getMes() {
-        return fecha.getMonthValue();
-    }
-
-    public int getAnio() {
-        return fecha.getYear();
-    }
-
-    public String getFecha() {
-        return fecha.toString();
+    //saber si un año es bisiesto
+    public static boolean esAnioBisiesto(int anio) {
+        return java.time.Year.isLeap(anio);
     }
 }

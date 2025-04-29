@@ -9,14 +9,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import SistemadeRegistro.RegistrodeChofer.ControlFrameChofer;
+import SistemadeRegistro.RegistrodeChofer.ChoferLogReg;
 import SistemadeRegistro.RegistrodeEstudiantes.ControlFrameEstudiante;
 
 
-public class SeleccióndeUsuarioGUI extends JFrame {
+public class SelecciondeUsuarioGUI extends JFrame {
     private JLabel displayLabel;
 
-    public SeleccióndeUsuarioGUI() {
+    public SelecciondeUsuarioGUI() {
         setTitle("Sistema de Registro - Transporte UDLAP");
         setSize(500, 170);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,7 +47,7 @@ public class SeleccióndeUsuarioGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                ControlFrameEstudiante estudianteGUI = new ControlFrameEstudiante(SeleccióndeUsuarioGUI.this);
+                ControlFrameEstudiante estudianteGUI = new ControlFrameEstudiante(SelecciondeUsuarioGUI.this);
                 estudianteGUI.setVisible(true);
             }
         });
@@ -55,8 +55,8 @@ public class SeleccióndeUsuarioGUI extends JFrame {
         choferButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-                ControlFrameChofer choferGUI = new ControlFrameChofer(SeleccióndeUsuarioGUI.this);
+                setVisible(false); // Cierra esta ventana
+                ChoferLogReg choferGUI = new ChoferLogReg(); // Abrir registro de chofer
                 choferGUI.setVisible(true);
             }
         });

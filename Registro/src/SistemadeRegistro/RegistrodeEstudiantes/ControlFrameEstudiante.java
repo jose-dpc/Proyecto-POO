@@ -46,9 +46,7 @@ public class ControlFrameEstudiante extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 verificarEstudiante();
-                if (displayLabel.getText().equals("Registro del Estudiante")) {
-                    System.exit(0);
-                }
+                System.exit(0);
             }
         });
 
@@ -83,7 +81,6 @@ public class ControlFrameEstudiante extends JFrame{
 
             // Si todo es válido, mostrar mensaje de éxito
             JOptionPane.showMessageDialog(null,"Estudiante registrado correctamente.");
-            displayLabel.setText("Registro del Estudiante"); 
         } catch (IllegalArgumentException ex) {
             // Mostrar el mensaje de error en la interfaz
             displayLabel.setText("Error: " + ex.getMessage());

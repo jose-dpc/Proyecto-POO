@@ -78,6 +78,7 @@ public class AgendarCitaGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 confirmarCita();
+                
             }
         });
 

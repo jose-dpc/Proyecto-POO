@@ -1,7 +1,6 @@
 package SistemadeRegistro;
-
 import javax.swing.*;
-import javax.swing.BorderFactory;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,42 +13,59 @@ public class SistemadeAdministrador extends JFrame {
     private JButton btnReportes;
 
     public SistemadeAdministrador() {
-        setTitle("Sistema de Administración");
+        setTitle("Sistema de Administración - Transporte UDLAP");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 400);
+        setSize(500, 400);
         setLocationRelativeTo(null);
         initComponents();
+        setVisible(true);
     }
 
     private void initComponents() {
-        btnUsuarios = new JButton("Administrar Usuarios");
-        btnRutas = new JButton("Administrar Rutas");
-        btnChoferes = new JButton("Administrar Choferes");
-        btnSolicitudes = new JButton("Revisar Solicitudes");
-        btnReportes = new JButton("Revisar Reportes");
+        JPanel panel = new JPanel(new GridLayout(6, 1, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
+        panel.setBackground(Color.white);
 
-        btnUsuarios.addActionListener(e -> new VentanaUsuarios().setVisible(true));
-        btnRutas.addActionListener(e -> new VentanaRutas().setVisible(true));
-        btnChoferes.addActionListener(e -> new VentanaChoferes().setVisible(true));
-        btnSolicitudes.addActionListener(e -> new VentanaSolicitudes().setVisible(true));
-        btnReportes.addActionListener(e -> new VentanaReportes().setVisible(true));
+        JLabel titleLabel = new JLabel("Seleccione una opción de administración", JLabel.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        panel.add(titleLabel);
+        
+        btnUsuarios = createStyledButton("Administrar Usuarios", new Color(243, 156, 18));
+        btnRutas = createStyledButton("Administrar Rutas", new Color(243, 156, 18));
+        btnChoferes = createStyledButton("Administrar Choferes", new Color(243, 156, 18));
+        btnSolicitudes = createStyledButton("Revisar Solicitudes", new Color(243, 156, 18));
+        btnReportes = createStyledButton("Revisar Reportes", new Color(243, 156, 18));
 
-        JPanel panel = new JPanel(new GridLayout(5, 1, 10, 10));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panel.add(btnUsuarios);
         panel.add(btnRutas);
         panel.add(btnChoferes);
         panel.add(btnSolicitudes);
         panel.add(btnReportes);
 
-        add(panel, BorderLayout.CENTER);
+        add(panel);
+
+        btnUsuarios.addActionListener(e -> new VentanaUsuarios().setVisible(true));
+        btnRutas.addActionListener(e -> new VentanaRutas().setVisible(true));
+        btnChoferes.addActionListener(e -> new VentanaChoferes().setVisible(true));
+        btnSolicitudes.addActionListener(e -> new VentanaSolicitudes().setVisible(true));
+        btnReportes.addActionListener(e -> new VentanaReportes().setVisible(true));
+    }
+
+    private JButton createStyledButton(String text, Color bgColor) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Arial", Font.PLAIN, 14));
+        button.setBackground(bgColor);
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        return button;
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new SistemadeAdministrador().setVisible(true));
+        SwingUtilities.invokeLater(SistemadeAdministrador::new);
     }
 }
 
+// Subventanas sin cambios de estilo (como pediste)
 
 class VentanaUsuarios extends JFrame {
     public VentanaUsuarios() {

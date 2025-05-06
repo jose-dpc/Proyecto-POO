@@ -1,6 +1,8 @@
 
 package SistemadeRegistro.RegistrodeVehiculos;
+import SistemadeRegistro.RegistrodeChofer.ControlFrameChofer;
 import SistemadeRegistro.SelecciondeRuta.SelecciondeRutaGUI;
+import SistemadeRegistro.RegistrodeChofer.Chofer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,9 +12,11 @@ public class VehiculoGUI  extends JFrame{
     private Vehiculo vehiculo;
     private JTextField marcaField, añoField, modeloField, kmField, rendimientoField, placaField, colorField, polizaField;
     private JTextArea resultadoArea;
+    private Chofer chofer;
 
-    public VehiculoGUI(JFrame parentFrame) {
-        vehiculo = new Vehiculo();
+    public VehiculoGUI(JFrame parentFrame, Chofer chofer) {
+        this.vehiculo = new Vehiculo();
+        this.chofer = chofer;
         
         // Creación de la ventana
         JFrame frame = new JFrame("Registro de Vehículos");
@@ -69,9 +73,8 @@ public class VehiculoGUI  extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 boolean exito = registrarVehiculo();
                 if (exito) {
-                    dispose(); // cerrar esta ventana
-                    SelecciondeRutaGUI cita = new SelecciondeRutaGUI(VehiculoGUI.this);
-                    cita.setVisible(true);
+                    dispose();  // Cierra esta ventana
+                    new ControlFrameChofer(chofer);
                 }
             }
         });

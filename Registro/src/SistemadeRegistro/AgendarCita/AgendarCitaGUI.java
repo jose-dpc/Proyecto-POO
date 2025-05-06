@@ -126,7 +126,7 @@ public class AgendarCitaGUI extends JFrame {
                 "\nFecha: " + fecha + "\nHora: " + hora);
 
         dispose(); // Cierra la ventana después de agendar
-        new VehiculoGUI(this);
+        new VehiculoGUI(this, chofer);
 
     }
 }

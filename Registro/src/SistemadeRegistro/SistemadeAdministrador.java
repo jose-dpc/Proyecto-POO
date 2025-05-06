@@ -65,7 +65,7 @@ public class SistemadeAdministrador extends JFrame {
     }
 }
 
-// Subventanas sin cambios de estilo (como pediste)
+// Subventanas 
 
 class VentanaUsuarios extends JFrame {
     public VentanaUsuarios() {

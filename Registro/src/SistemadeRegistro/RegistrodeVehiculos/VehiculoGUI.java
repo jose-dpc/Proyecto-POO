@@ -1,10 +1,10 @@
 
 package SistemadeRegistro.RegistrodeVehiculos;
-import javax.swing.*;
 import SistemadeRegistro.SelecciondeRuta.SelecciondeRutaGUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.*;
 
 public class VehiculoGUI  extends JFrame{
     private Vehiculo vehiculo;
@@ -19,6 +19,7 @@ public class VehiculoGUI  extends JFrame{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
         frame.setLayout(new GridLayout(9, 2, 5, 5));
+        frame.setLocationRelativeTo(null);
         
         // Las entradas
         frame.add(new JLabel("Marca:"));
@@ -63,22 +64,23 @@ public class VehiculoGUI  extends JFrame{
         JScrollPane scrollPane = new JScrollPane(resultadoArea);
         frame.add(scrollPane);
         
-        // Listener para la acción
         registrarBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                registrarVehiculo();
-                setVisible(false);
-
-                SelecciondeRutaGUI Cita = new SelecciondeRutaGUI(VehiculoGUI.this);
-                Cita.setVisible(true);
+                boolean exito = registrarVehiculo();
+                if (exito) {
+                    dispose(); // cerrar esta ventana
+                    SelecciondeRutaGUI cita = new SelecciondeRutaGUI(VehiculoGUI.this);
+                    cita.setVisible(true);
+                }
             }
         });
+        
         
         frame.setVisible(true);
     }
     
-    private void registrarVehiculo() {
+    private boolean registrarVehiculo() {
         try {
             // Asegurar que ninguno de los campos este vacio
             String marca = marcaField.getText().trim();
@@ -89,7 +91,7 @@ public class VehiculoGUI  extends JFrame{
 
             if (marca.isEmpty() || modelo.isEmpty()){
                 resultadoArea.setText("Por favor ingresar valores para marca y modelo");
-                return;
+                return false;
             }
 
             int año =  añoField.getText().isEmpty() ? vehiculo.getAño() : Integer.parseInt(añoField.getText());
@@ -132,16 +134,23 @@ public class VehiculoGUI  extends JFrame{
                     }
                 } else {
                     mensaje += "Se debe contestar para determinar la necesidad de mantenimiento.";
+                    resultadoArea.setText(mensaje);
+                    return false;
                 }
             } else {
                 mensaje += "No es necesario hacer mantenimiento.";
             }
 
             resultadoArea.setText(mensaje);
+            int confirm = JOptionPane.showConfirmDialog(null, "Vehículo registrado exitosamente.\n¿Deseas continuar?", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
+            return confirm == JOptionPane.OK_OPTION;
+
         } catch (NumberFormatException ex) {
             resultadoArea.setText("Error: Ingrese valores numéricos en Modelo y Kilometraje.");
+            return false;
         } catch (IllegalArgumentException ex) {
             resultadoArea.setText(ex.getMessage());
+            return false;
         }
     }
 

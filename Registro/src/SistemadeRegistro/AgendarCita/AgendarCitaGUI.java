@@ -1,17 +1,13 @@
 package SistemadeRegistro.AgendarCita;
 
-
-import javax.swing.*;
-
-
+import SistemadeRegistro.RegistrodeVehiculos.VehiculoGUI;
+import SistemadeRegistro.RegistrodeChofer.Chofer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalTime;
-
-import SistemadeRegistro.RegistrodeVehiculos.VehiculoGUI;
-import SistemadeRegistro.RegistrodeChofer.Chofer;
+import javax.swing.*;
 
 public class AgendarCitaGUI extends JFrame {
     private JTextField txtCorreo;
@@ -106,7 +102,7 @@ public class AgendarCitaGUI extends JFrame {
             fecha = LocalDate.of(anio, mes, dia);
             hora = LocalTime.parse(horaSeleccionada + ":00");
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Fecha o hora inválida.");
+            JOptionPane.showMessageDialog(this, "Fecha u hora inválida.");
             return;
         }
 
@@ -130,7 +126,7 @@ public class AgendarCitaGUI extends JFrame {
                 "\nFecha: " + fecha + "\nHora: " + hora);
 
         dispose(); // Cierra la ventana después de agendar
+        new VehiculoGUI(this);
 
-        new VehiculoGUI();
     }
 }

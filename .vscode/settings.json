@@ -1,5 +1,10 @@
 {
-    "java.project.sourcePaths": ["Registro/src", "Calificacion/src"],
+    "java.project.sourcePaths": [
+        "Registro/src",
+        "Calificacion/src",
+        "BaseDeDatos/src/BasesDeDatos",
+        "BaseDeDatos/src"
+    ],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
         "lib/jcalendar-1.4.jar",

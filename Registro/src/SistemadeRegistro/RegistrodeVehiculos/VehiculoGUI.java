@@ -1,84 +1,89 @@
 
 package SistemadeRegistro.RegistrodeVehiculos;
-import javax.swing.*;
+import SistemadeRegistro.RegistrodeChofer.ControlFrameChofer;
 import SistemadeRegistro.SelecciondeRuta.SelecciondeRutaGUI;
+import SistemadeRegistro.RegistrodeChofer.Chofer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.*;
 
 public class VehiculoGUI  extends JFrame{
     private Vehiculo vehiculo;
     private JTextField marcaField, añoField, modeloField, kmField, rendimientoField, placaField, colorField, polizaField;
     private JTextArea resultadoArea;
+    private Chofer chofer;
 
-    public VehiculoGUI(JFrame parentFrame) {
-        vehiculo = new Vehiculo();
+    public VehiculoGUI(JFrame parentFrame, Chofer chofer) {
+        this.vehiculo = new Vehiculo();
+        this.chofer = chofer;
         
         // Creación de la ventana
-        JFrame frame = new JFrame("Registro de Vehículos");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-        frame.setLayout(new GridLayout(9, 2, 5, 5));
+        setTitle ("Registro de Vehículos");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(800, 600);
+        setLayout(new GridLayout(9, 2, 5, 5));
+        setLocationRelativeTo(null);
         
         // Las entradas
-        frame.add(new JLabel("Marca:"));
+        add(new JLabel("Marca:"));
         marcaField = new JTextField(10);
-        frame.add(marcaField);
+        add(marcaField);
 
-        frame.add(new JLabel("Modelo:"));
+        add(new JLabel("Modelo:"));
         modeloField = new JTextField(10);
-        frame.add(modeloField);
+        add(modeloField);
 
-        frame.add(new JLabel("Placas:"));
+        add(new JLabel("Placas:"));
         placaField = new JTextField(10);
-        frame.add(placaField);
+        add(placaField);
 
-        frame.add(new JLabel("Color:"));
+        add(new JLabel("Color:"));
         colorField = new JTextField(10);
-        frame.add(colorField);
+        add(colorField);
 
-        frame.add(new JLabel("Año:"));
+        add(new JLabel("Año:"));
         añoField = new JTextField(10);
-        frame.add(añoField);
+        add(añoField);
         
-        frame.add(new JLabel("Kilometraje:"));
+        add(new JLabel("Kilometraje:"));
         kmField = new JTextField(10);
-        frame.add(kmField);
+        add(kmField);
 
-        frame.add(new JLabel("Rendimiento (km/L):"));
+        add(new JLabel("Rendimiento (km/L):"));
         rendimientoField = new JTextField(10);
-        frame.add(rendimientoField);
+        add(rendimientoField);
 
-        frame.add(new JLabel("Poliza de Seguro:"));
+        add(new JLabel("Poliza de Seguro:"));
         polizaField = new JTextField(10);
-        frame.add(polizaField);
+        add(polizaField);
         
         // Botón del GUI
         JButton registrarBtn = new JButton("Registrar Vehiculo");
-        frame.add(registrarBtn);
+        add(registrarBtn);
         
         resultadoArea = new JTextArea(10,40);
         resultadoArea.setEditable(false);
         resultadoArea.setText("Ingrese sus valores y presione el botón");
         JScrollPane scrollPane = new JScrollPane(resultadoArea);
-        frame.add(scrollPane);
+        add(scrollPane);
         
-        // Listener para la acción
         registrarBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                registrarVehiculo();
-                setVisible(false);
-
-                SelecciondeRutaGUI Cita = new SelecciondeRutaGUI(VehiculoGUI.this);
-                Cita.setVisible(true);
+                boolean exito = registrarVehiculo();
+                if (exito) {
+                    dispose();  // Cierra esta ventana
+                    new ControlFrameChofer(chofer);
+                }
             }
         });
         
-        frame.setVisible(true);
+        
+        setVisible(true);
     }
     
-    private void registrarVehiculo() {
+    private boolean registrarVehiculo() {
         try {
             // Asegurar que ninguno de los campos este vacio
             String marca = marcaField.getText().trim();
@@ -89,7 +94,7 @@ public class VehiculoGUI  extends JFrame{
 
             if (marca.isEmpty() || modelo.isEmpty()){
                 resultadoArea.setText("Por favor ingresar valores para marca y modelo");
-                return;
+                return false;
             }
 
             int año =  añoField.getText().isEmpty() ? vehiculo.getAño() : Integer.parseInt(añoField.getText());
@@ -132,16 +137,23 @@ public class VehiculoGUI  extends JFrame{
                     }
                 } else {
                     mensaje += "Se debe contestar para determinar la necesidad de mantenimiento.";
+                    resultadoArea.setText(mensaje);
+                    return false;
                 }
             } else {
                 mensaje += "No es necesario hacer mantenimiento.";
             }
 
             resultadoArea.setText(mensaje);
+            int confirm = JOptionPane.showConfirmDialog(null, "Vehículo registrado exitosamente.\n¿Deseas continuar?", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
+            return confirm == JOptionPane.OK_OPTION;
+
         } catch (NumberFormatException ex) {
             resultadoArea.setText("Error: Ingrese valores numéricos en Modelo y Kilometraje.");
+            return false;
         } catch (IllegalArgumentException ex) {
             resultadoArea.setText(ex.getMessage());
+            return false;
         }
     }
 

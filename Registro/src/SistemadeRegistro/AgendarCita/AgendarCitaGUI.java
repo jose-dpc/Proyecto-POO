@@ -1,20 +1,19 @@
 package SistemadeRegistro.AgendarCita;
 
-import javax.swing.*;
-
+import SistemadeRegistro.RegistrodeVehiculos.VehiculoGUI;
 import SistemadeRegistro.RegistrodeChofer.Chofer;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import javax.swing.*;
 
 public class AgendarCitaGUI extends JFrame {
-    private JTextField txtMatricula;
+    private JTextField txtCorreo;
     private JComboBox<Integer> comboDia;
     private JComboBox<String> comboMes;
-    private JComboBox<Integer> comboAnio;
+    private JComboBox<Integer> comboAño;
     private JComboBox<String> comboHora;
     private JButton btnConfirmar;
     private Chofer chofer;
@@ -33,9 +32,9 @@ public class AgendarCitaGUI extends JFrame {
         JPanel panel = new JPanel(new GridLayout(7, 2, 10, 10));
 
         // Matrícula
-        panel.add(new JLabel("Matrícula de Chofer:"));
-        txtMatricula = new JTextField();
-        panel.add(txtMatricula);
+        panel.add(new JLabel("Correo: "));
+        txtCorreo = new JTextField();
+        panel.add(txtCorreo);
 
         // Día
         panel.add(new JLabel("Día:"));
@@ -54,11 +53,11 @@ public class AgendarCitaGUI extends JFrame {
 
         // Año
         panel.add(new JLabel("Año:"));
-        comboAnio = new JComboBox<>();
-        for (int i = 2024; i <= 2026; i++) {
-            comboAnio.addItem(i);
+        comboAño = new JComboBox<>();
+        for (int i = 2025; i <= 2026; i++) {
+            comboAño.addItem(i);
         }
-        panel.add(comboAnio);
+        panel.add(comboAño);
 
         // Hora
         panel.add(new JLabel("Hora:"));
@@ -86,14 +85,14 @@ public class AgendarCitaGUI extends JFrame {
     }
 
     private void confirmarCita() {
-        String matricula = txtMatricula.getText().trim();
+        String correo = txtCorreo.getText().trim();
         int dia = (Integer) comboDia.getSelectedItem();
         int mes = comboMes.getSelectedIndex() + 1; // porque enero es 0
-        int anio = (Integer) comboAnio.getSelectedItem();
+        int anio = (Integer) comboAño.getSelectedItem();
         String horaSeleccionada = (String) comboHora.getSelectedItem();
 
-        if (matricula.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese la matrícula.");
+        if (correo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese su correo.");
             return;
         }
 
@@ -103,7 +102,7 @@ public class AgendarCitaGUI extends JFrame {
             fecha = LocalDate.of(anio, mes, dia);
             hora = LocalTime.parse(horaSeleccionada + ":00");
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Fecha o hora inválida.");
+            JOptionPane.showMessageDialog(this, "Fecha u hora inválida.");
             return;
         }
 
@@ -123,9 +122,11 @@ public class AgendarCitaGUI extends JFrame {
         }
 
         // Si todo es válido
-        JOptionPane.showMessageDialog(this, "¡Cita agendada exitosamente!\nMatrícula: " + matricula +
+        JOptionPane.showMessageDialog(this, "¡Cita agendada exitosamente!\nMatrícula: " + correo +
                 "\nFecha: " + fecha + "\nHora: " + hora);
 
         dispose(); // Cierra la ventana después de agendar
+        new VehiculoGUI(this, chofer);
+
     }
 }

@@ -19,54 +19,54 @@ public class VehiculoGUI  extends JFrame{
         this.chofer = chofer;
         
         // Creación de la ventana
-        JFrame frame = new JFrame("Registro de Vehículos");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-        frame.setLayout(new GridLayout(9, 2, 5, 5));
-        frame.setLocationRelativeTo(null);
+        setTitle ("Registro de Vehículos");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(800, 600);
+        setLayout(new GridLayout(9, 2, 5, 5));
+        setLocationRelativeTo(null);
         
         // Las entradas
-        frame.add(new JLabel("Marca:"));
+        add(new JLabel("Marca:"));
         marcaField = new JTextField(10);
-        frame.add(marcaField);
+        add(marcaField);
 
-        frame.add(new JLabel("Modelo:"));
+        add(new JLabel("Modelo:"));
         modeloField = new JTextField(10);
-        frame.add(modeloField);
+        add(modeloField);
 
-        frame.add(new JLabel("Placas:"));
+        add(new JLabel("Placas:"));
         placaField = new JTextField(10);
-        frame.add(placaField);
+        add(placaField);
 
-        frame.add(new JLabel("Color:"));
+        add(new JLabel("Color:"));
         colorField = new JTextField(10);
-        frame.add(colorField);
+        add(colorField);
 
-        frame.add(new JLabel("Año:"));
+        add(new JLabel("Año:"));
         añoField = new JTextField(10);
-        frame.add(añoField);
+        add(añoField);
         
-        frame.add(new JLabel("Kilometraje:"));
+        add(new JLabel("Kilometraje:"));
         kmField = new JTextField(10);
-        frame.add(kmField);
+        add(kmField);
 
-        frame.add(new JLabel("Rendimiento (km/L):"));
+        add(new JLabel("Rendimiento (km/L):"));
         rendimientoField = new JTextField(10);
-        frame.add(rendimientoField);
+        add(rendimientoField);
 
-        frame.add(new JLabel("Poliza de Seguro:"));
+        add(new JLabel("Poliza de Seguro:"));
         polizaField = new JTextField(10);
-        frame.add(polizaField);
+        add(polizaField);
         
         // Botón del GUI
         JButton registrarBtn = new JButton("Registrar Vehiculo");
-        frame.add(registrarBtn);
+        add(registrarBtn);
         
         resultadoArea = new JTextArea(10,40);
         resultadoArea.setEditable(false);
         resultadoArea.setText("Ingrese sus valores y presione el botón");
         JScrollPane scrollPane = new JScrollPane(resultadoArea);
-        frame.add(scrollPane);
+        add(scrollPane);
         
         registrarBtn.addActionListener(new ActionListener() {
             @Override
@@ -80,7 +80,7 @@ public class VehiculoGUI  extends JFrame{
         });
         
         
-        frame.setVisible(true);
+        setVisible(true);
     }
     
     private boolean registrarVehiculo() {

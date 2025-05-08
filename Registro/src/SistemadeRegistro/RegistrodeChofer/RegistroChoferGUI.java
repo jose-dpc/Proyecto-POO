@@ -28,19 +28,25 @@ public class RegistroChoferGUI extends JFrame {
         JPanel panel = new JPanel(new GridLayout(5, 2, 10, 10));
         JLabel lblNombre = new JLabel("Nombre Completo:");
         lblNombre.setForeground(new Color(243, 156, 18)); // Cambia el color de la letra a naranja
-        panel.add(txtNombre);
+        panel.add(lblNombre);
         txtNombre = new JTextField();
         panel.add(txtNombre);
         
-        panel.add(new JLabel("Correo:"));
+        JLabel lblCorreo = new JLabel("Correo:");
+        lblCorreo.setForeground(new Color(243, 156, 18)); // Cambia el color de la letra a naranja
+        panel.add(lblCorreo);
         txtCorreo = new JTextField();
         panel.add(txtCorreo);
 
-        panel.add(new JLabel("Teléfono:"));
+        JLabel lblTelefono = new JLabel("Telefono:");
+        lblTelefono.setForeground(new Color(243, 156, 18)); // Cambia el color de la letra a naranja
+        panel.add(lblTelefono);
         txtTelefono = new JTextField();
         panel.add(txtTelefono);
 
-        panel.add(new JLabel("CURP:"));
+        JLabel lblCURP = new JLabel("CURP:");
+        lblCURP.setForeground(new Color(243, 156, 18)); // Cambia el color de la letra a naranja
+        panel.add(lblCURP);
         txtCurp = new JTextField();
         panel.add(txtCurp);
 

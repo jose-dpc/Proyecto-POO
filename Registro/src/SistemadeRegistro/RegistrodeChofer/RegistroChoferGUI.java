@@ -26,11 +26,12 @@ public class RegistroChoferGUI extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel(new GridLayout(5, 2, 10, 10));
-
-        panel.add(new JLabel("Nombre Completo:"));
+        JLabel lblNombre = new JLabel("Nombre Completo:");
+        lblNombre.setForeground(new Color(243, 156, 18)); // Cambia el color de la letra a naranja
+        panel.add(txtNombre);
         txtNombre = new JTextField();
         panel.add(txtNombre);
-
+        
         panel.add(new JLabel("Correo:"));
         txtCorreo = new JTextField();
         panel.add(txtCorreo);
@@ -44,6 +45,9 @@ public class RegistroChoferGUI extends JFrame {
         panel.add(txtCurp);
 
         btnRegistrar = new JButton("Registrar");
+        btnRegistrar.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnRegistrar.setBackground(new Color(46, 204, 113)); // verde
+        btnRegistrar.setForeground(Color.WHITE);
         panel.add(new JLabel()); // espacio vacío
         panel.add(btnRegistrar);
 

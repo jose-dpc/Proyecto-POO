@@ -24,8 +24,14 @@ public class ChoferLogReg extends JFrame {
         panel.add(lblTitulo);
 
         JButton btnRegistrar = new JButton("Registrar Nuevo Chofer");
-        JButton btnIniciarSesion = new JButton("Iniciar Sesión Chofer");
-
+        btnRegistrar.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnRegistrar.setBackground(new Color(46, 204, 113)); // verde
+        btnRegistrar.setForeground(Color.WHITE);
+        JButton btnIniciarSesion = new JButton("Iniciar Sesion Chofer");
+        btnIniciarSesion.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnIniciarSesion.setBackground(new Color(243, 156, 18)); // naranja
+        btnIniciarSesion.setForeground(Color.WHITE);
+        
         panel.add(btnRegistrar);
         panel.add(btnIniciarSesion);
 

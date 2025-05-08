@@ -1,10 +1,9 @@
 package SistemadeRegistro.RegistrodeEstudiantes;
+import SistemadeRegistro.BaseDeDatos.UsoDeBase.RegistroUsuario;
 import java.awt.*;
-import javax.swing.*;
-
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.*;
 
 public class ControlFrameEstudiante extends JFrame{
     private Estudiante estudiante;
@@ -29,22 +28,37 @@ public class ControlFrameEstudiante extends JFrame{
         frame.setLayout(new GridLayout(6, 2, 5, 5));
 
         // Crear los campos de texto para ID, contraseña y nombre
-        idField = createField(frame, "ID: ");
-        contrasenaField = createField(frame, "Contraseña: ");
-        nombreField = createField(frame, "Nombre: ");
+        JPanel idpanel = new JPanel(new FlowLayout());
+        idpanel.add(new JLabel("ID:"));
+        idField = new JTextField(10);
+        idpanel.add(idField);
+        frame.add(idpanel);
+        JPanel passpanel = new JPanel(new FlowLayout());
+        passpanel.add(new JLabel("Contraseña:"));
+        contrasenaField = new JTextField(10);
+        passpanel.add(contrasenaField);
+        frame.add(passpanel);
+        JPanel namepanel = new JPanel(new FlowLayout());
+        namepanel.add(new JLabel("Nombre:"));
+        nombreField = new JTextField(10);
+        namepanel.add(nombreField);
+        frame.add(namepanel);
 
         // Etiqueta para mostrar el estado del estudiante
         displayLabel = new JLabel("Registro del Estudiante", SwingConstants.CENTER);
         frame.add(displayLabel);
 
         // Crear botón para verificar si la contraseña es segura
-        JButton verificarButton = new JButton("Verificar Contraseña");
+        JButton verificarButton = new JButton("Registrar Estudiante");
+        verificarButton.setBackground(Color.GREEN);
         frame.add(verificarButton);
 
         // Agregar acción al botón
         verificarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String[] datos = obtenerDatos();
+                RegistroUsuario registro = new RegistroUsuario(datos);
                 verificarEstudiante();
                 System.exit(0);
             }
@@ -53,7 +67,13 @@ public class ControlFrameEstudiante extends JFrame{
         // Hacer visible la ventana
         frame.setVisible(true);
     }
-
+    private String[] obtenerDatos() {
+        String[] datos = new String[3];
+        datos[0] = idField.getText().trim();
+        datos[1] = nombreField.getText().trim();
+        datos[2] = contrasenaField.getText().trim(); // Convierte la contraseña a String
+        return datos;
+    }
     private void verificarEstudiante() {
         try {
             // Obtener los datos ingresados por el usuario

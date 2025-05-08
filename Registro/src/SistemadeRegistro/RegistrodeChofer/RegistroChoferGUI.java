@@ -1,12 +1,11 @@
 package SistemadeRegistro.RegistrodeChofer;
 
-import javax.swing.*;
-
 import SistemadeRegistro.AgendarCita.AgendarCitaGUI;
-
+import SistemadeRegistro.BaseDeDatos.UsoDeBase.RegistroChofer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.*;
 
 public class RegistroChoferGUI extends JFrame {
     private JTextField txtNombre;
@@ -52,11 +51,22 @@ public class RegistroChoferGUI extends JFrame {
         btnRegistrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String[] datos = obtenerDatos();
+                RegistroChofer registro = new RegistroChofer(datos);
                 registrarChofer();
             }
         });
 
         setVisible(true);
+    }
+    private String[] obtenerDatos() {
+        String[] datos = new String[5];
+            datos[0] = txtNombre.getText().trim();
+            datos[1] = txtCorreo.getText().trim();
+            datos[2] = txtTelefono.getText().trim();
+            datos[3] = txtCurp.getText().trim();
+            datos[4] = "10"; 
+        return datos;
     }
 
    private void registrarChofer() {

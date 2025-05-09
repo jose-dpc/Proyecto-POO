@@ -32,12 +32,16 @@ public class AgendarCitaGUI extends JFrame {
         JPanel panel = new JPanel(new GridLayout(7, 2, 10, 10));
 
         // Matrícula
-        panel.add(new JLabel("Correo: "));
+        JLabel lblCorreo = new JLabel("Correo:");
+        lblCorreo.setForeground(new Color(243, 156, 18)); // Cambia el color de la letra a naranja
+        panel.add(lblCorreo);
         txtCorreo = new JTextField();
         panel.add(txtCorreo);
 
         // Día
-        panel.add(new JLabel("Día:"));
+        JLabel lblDia = new JLabel("Dia:");
+        lblDia.setForeground(new Color(243, 156, 18)); // Cambia el color de la letra a naranja
+        panel.add(lblDia);
         comboDia = new JComboBox<>();
         for (int i = 1; i <= 31; i++) {
             comboDia.addItem(i);
@@ -45,14 +49,18 @@ public class AgendarCitaGUI extends JFrame {
         panel.add(comboDia);
 
         // Mes
-        panel.add(new JLabel("Mes:"));
+        JLabel lblMes = new JLabel("Mes:");
+        lblMes.setForeground(new Color(243, 156, 18)); // Cambia el color de la letra a naranja
+        panel.add(lblMes);
         String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
                           "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
         comboMes = new JComboBox<>(meses);
         panel.add(comboMes);
 
         // Año
-        panel.add(new JLabel("Año:"));
+        JLabel lblAño = new JLabel("Año");
+        lblAño.setForeground(new Color(243, 156, 18)); // Cambia el color de la letra a naranja
+        panel.add(lblAño);
         comboAño = new JComboBox<>();
         for (int i = 2025; i <= 2026; i++) {
             comboAño.addItem(i);
@@ -60,7 +68,9 @@ public class AgendarCitaGUI extends JFrame {
         panel.add(comboAño);
 
         // Hora
-        panel.add(new JLabel("Hora:"));
+        JLabel lblHora = new JLabel("Hora: ");
+        lblHora.setForeground(new Color(243, 156, 18)); // Cambia el color de la letra a naranja
+        panel.add(lblHora);
         String[] horas = {"09:00", "10:00", "11:00", "12:00", "13:00", 
                           "14:00", "15:00", "16:00", "17:00"};
         comboHora = new JComboBox<>(horas);
@@ -68,6 +78,9 @@ public class AgendarCitaGUI extends JFrame {
 
         // Botón Confirmar
         btnConfirmar = new JButton("Confirmar Cita");
+        btnConfirmar.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnConfirmar.setBackground(new Color(46, 204, 113)); // verde
+        btnConfirmar.setForeground(Color.WHITE);
         panel.add(new JLabel()); // Espaciador
         panel.add(btnConfirmar);
 

@@ -28,10 +28,25 @@ public class ControlFrameChofer extends JFrame {
 
         // Crear botones
         JButton btnRegistrarVehiculo = new JButton("Registrar Vehículo");
+        btnRegistrarVehiculo.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnRegistrarVehiculo.setBackground(new Color(243, 156, 18)); // Naranja
+        btnRegistrarVehiculo.setForeground(Color.WHITE);
         JButton btnCrearRuta = new JButton("Crear Ruta Nueva");
+        btnCrearRuta.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnCrearRuta.setBackground(new Color(243, 156, 18)); // Naranja
+        btnCrearRuta.setForeground(Color.WHITE);
         JButton btnUnirseRuta = new JButton("Unirse a Ruta Existente");
+        btnUnirseRuta.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnUnirseRuta.setBackground(new Color(243, 156, 18)); // Naranja
+        btnUnirseRuta.setForeground(Color.WHITE);
         JButton btnEliminarRuta = new JButton("Eliminar Ruta");
+        btnEliminarRuta.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnEliminarRuta.setBackground(new Color(243, 156, 18)); // Naranja
+        btnEliminarRuta.setForeground(Color.WHITE);
         JButton btnCerrarSesion = new JButton("Cerrar Sesión");
+        btnCerrarSesion.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnCerrarSesion.setBackground(new Color(243, 156, 18)); // Naranja
+        btnCerrarSesion.setForeground(Color.WHITE);
 
         // Agregar listeners a botones
         btnRegistrarVehiculo.addActionListener(new ActionListener() {

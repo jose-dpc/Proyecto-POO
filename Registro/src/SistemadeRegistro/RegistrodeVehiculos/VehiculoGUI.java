@@ -11,96 +11,106 @@ import javax.swing.*;
 public class VehiculoGUI  extends JFrame{
     private Vehiculo vehiculo;
     private JTextField marcaField, añoField, modeloField, kmField, rendimientoField, placaField, colorField, polizaField;
-    private JTextArea resultadoArea;
     private Chofer chofer;
 
     public VehiculoGUI(JFrame parentFrame, Chofer chofer) {
         this.vehiculo = new Vehiculo();
         this.chofer = chofer;
-        
-        // Creación de la ventana
-        setTitle ("Registro de Vehículos");
+
+        setTitle("Registro de Vehículos");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
+        setSize(450, 500);
         setLayout(new GridLayout(9, 2, 5, 5));
         setLocationRelativeTo(null);
-        
-        // Las entradas
-        add(new JLabel("Marca:"));
+
+        JLabel lblMarca = new JLabel("Marca:");
+        lblMarca.setForeground(new Color(243, 156, 18));
+        add(lblMarca);
         marcaField = new JTextField(10);
         add(marcaField);
 
-        add(new JLabel("Modelo:"));
+        JLabel lblModelo = new JLabel("Modelo:");
+        lblModelo.setForeground(new Color(243, 156, 18));
+        add(lblModelo);
         modeloField = new JTextField(10);
         add(modeloField);
 
-        add(new JLabel("Placas:"));
+        JLabel lblPlacas = new JLabel("Placas:");
+        lblPlacas.setForeground(new Color(243, 156, 18));
+        add(lblPlacas);
         placaField = new JTextField(10);
         add(placaField);
 
-        add(new JLabel("Color:"));
+        JLabel lblColor = new JLabel("Color:");
+        lblColor.setForeground(new Color(243, 156, 18));
+        add(lblColor);
         colorField = new JTextField(10);
         add(colorField);
 
-        add(new JLabel("Año:"));
+        JLabel lblAño = new JLabel("Año:");
+        lblAño.setForeground(new Color(243, 156, 18));
+        add(lblAño);
         añoField = new JTextField(10);
         add(añoField);
-        
-        add(new JLabel("Kilometraje:"));
+
+        JLabel lblKm = new JLabel("Kilometraje:");
+        lblKm.setForeground(new Color(243, 156, 18));
+        add(lblKm);
         kmField = new JTextField(10);
         add(kmField);
 
-        add(new JLabel("Rendimiento (km/L):"));
+        JLabel lblRendimiento = new JLabel("Rendimiento (km/L):");
+        lblRendimiento.setForeground(new Color(243, 156, 18));
+        add(lblRendimiento);
         rendimientoField = new JTextField(10);
         add(rendimientoField);
 
-        add(new JLabel("Poliza de Seguro:"));
+        JLabel lblPoliza = new JLabel("Poliza de seguro");
+        lblPoliza.setForeground(new Color(243, 156, 18));
+        add(lblPoliza);
         polizaField = new JTextField(10);
         add(polizaField);
-        
-        // Botón del GUI
+
         JButton registrarBtn = new JButton("Registrar Vehiculo");
+        registrarBtn.setFont(new Font("Arial", Font.PLAIN, 14));
+        registrarBtn.setBackground(new Color(46, 204, 113));
+        registrarBtn.setForeground(Color.WHITE);
         add(registrarBtn);
-        
-        resultadoArea = new JTextArea(10,40);
-        resultadoArea.setEditable(false);
-        resultadoArea.setText("Ingrese sus valores y presione el botón");
-        JScrollPane scrollPane = new JScrollPane(resultadoArea);
-        add(scrollPane);
-        
+
+        // celda vacía para mantener el diseño
+        add(new JLabel());
+
         registrarBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 boolean exito = registrarVehiculo();
                 if (exito) {
-                    dispose();  // Cierra esta ventana
+                    dispose();
                     new ControlFrameChofer(chofer);
                 }
             }
         });
-        
-        
+
         setVisible(true);
     }
-    
+
     private boolean registrarVehiculo() {
         try {
-            // Asegurar que ninguno de los campos este vacio
             String marca = marcaField.getText().trim();
             String modelo = modeloField.getText().trim();
             String color = colorField.getText().trim();
             String poliza = polizaField.getText().trim();
             String placas = placaField.getText().trim();
 
-            if (marca.isEmpty() || modelo.isEmpty()){
-                resultadoArea.setText("Por favor ingresar valores para marca y modelo");
+            if (marca.isEmpty() || modelo.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor ingresar valores para marca y modelo.", "Campos requeridos", JOptionPane.WARNING_MESSAGE);
                 return false;
             }
 
-            int año =  añoField.getText().isEmpty() ? vehiculo.getAño() : Integer.parseInt(añoField.getText());
-            int km =  kmField.getText().isEmpty() ? vehiculo.getKm() : Integer.parseInt(kmField.getText());
+            int año = añoField.getText().isEmpty() ? vehiculo.getAño() : Integer.parseInt(añoField.getText());
+            int km = kmField.getText().isEmpty() ? vehiculo.getKm() : Integer.parseInt(kmField.getText());
             int rendimiento = rendimientoField.getText().isEmpty() ? vehiculo.getRendimiento() : Integer.parseInt(rendimientoField.getText());
-            
+
             vehiculo.setMarca(marca);
             vehiculo.setAño(año);
             vehiculo.setModelo(modelo);
@@ -110,51 +120,55 @@ public class VehiculoGUI  extends JFrame{
             vehiculo.setPoliza(poliza);
             vehiculo.setPlacas(placas);
 
-            
-            String mensaje = "Vehículo registrado: " + marca + " " + modelo + " " + color + ", " + año + "\n" + "Placas: " + placas + "\n" + 
-                             "Kilometraje: " + km + "\n" + "Rendimiento: "+ rendimiento + "\n" + "Poliza de Seguro: " + poliza + "\n";
-
-            // Verificación de kilometraje
             if (vehiculo.checkKm()) {
-                // Preguntar al usuario cuándo fue la última revisión
-                String[] opciones = {"Entre 1 y 6 meses", "De 6 meses a un año", "Más de un año"};
+                String[] opciones = {"1 a 6 meses", "6 a 12 meses", "Más de 12 meses"};
                 String respuesta = (String) JOptionPane.showInputDialog(
-                    null, 
-                    "¿Hace cuánto tiempo fue la última revisión de su vehículo?", 
-                    "Revisión de Mantenimiento", 
-                    JOptionPane.QUESTION_MESSAGE, 
-                    null, 
-                    opciones, 
-                    opciones[0]);
+                        this,
+                        "¿Cuándo fue la última revisión de mantenimiento?",
+                        "Mantenimiento Preventivo",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        opciones,
+                        opciones[0]
+                );
 
-                if (respuesta != null) {
-                    if (respuesta.equals("Más de un año")) {
-                        mensaje += "¡Se sugiere mantenimiento URGENTE!";
-                    } else if (respuesta.equals("De 6 meses a un año")) {
-                        mensaje += "Se recomienda hacer mantenimiento.";
-                    } else {
-                        mensaje += "No es necesario mantenimiento por ahora.";
-                    }
-                } else {
-                    mensaje += "Se debe contestar para determinar la necesidad de mantenimiento.";
-                    resultadoArea.setText(mensaje);
+                if (respuesta == null) {
+                    JOptionPane.showMessageDialog(this, "Debe seleccionar una opción para continuar.", "Mantenimiento requerido", JOptionPane.WARNING_MESSAGE);
                     return false;
                 }
-            } else {
-                mensaje += "No es necesario hacer mantenimiento.";
+
+                switch (respuesta) {
+                    case "Más de 12 meses":
+                        JOptionPane.showMessageDialog(this, "¡Se sugiere mantenimiento URGENTE!");
+                        break;
+                    case "6 a 12 meses":
+                        JOptionPane.showMessageDialog(this, "Se recomienda hacer mantenimiento pronto.");
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(this, "No es necesario mantenimiento por ahora.");
+                        break;
+                }
             }
 
-            resultadoArea.setText(mensaje);
-            int confirm = JOptionPane.showConfirmDialog(null, "Vehículo registrado exitosamente.\n¿Deseas continuar?", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
+            String mensaje = "Vehículo registrado:\n" +
+                    "Marca: " + marca + "\n" +
+                    "Modelo: " + modelo + "\n" +
+                    "Color: " + color + "\n" +
+                    "Año: " + año + "\n" +
+                    "Placas: " + placas + "\n" +
+                    "Kilometraje: " + km + "\n" +
+                    "Rendimiento: " + rendimiento + "\n" +
+                    "Póliza: " + poliza;
+
+            int confirm = JOptionPane.showConfirmDialog(this, mensaje + "\n\n¿Deseas continuar?", "Vehículo registrado", JOptionPane.OK_CANCEL_OPTION);
             return confirm == JOptionPane.OK_OPTION;
 
         } catch (NumberFormatException ex) {
-            resultadoArea.setText("Error: Ingrese valores numéricos en Modelo y Kilometraje.");
+            JOptionPane.showMessageDialog(this, "Error: Ingrese valores numéricos válidos en los campos Año, Kilometraje y Rendimiento.", "Formato inválido", JOptionPane.ERROR_MESSAGE);
             return false;
         } catch (IllegalArgumentException ex) {
-            resultadoArea.setText(ex.getMessage());
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de datos", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
-
 }

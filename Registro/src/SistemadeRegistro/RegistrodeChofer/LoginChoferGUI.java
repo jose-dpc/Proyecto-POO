@@ -21,11 +21,16 @@ public class LoginChoferGUI extends JFrame {
 
         JPanel panel = new JPanel(new GridLayout(2, 2, 10, 10));
 
-        panel.add(new JLabel("CURP:"));
+         JLabel lblCURP = new JLabel("CURP:");
+        lblCURP.setForeground(new Color(243, 156, 18)); // Cambia el color de la letra a naranja
+        panel.add(lblCURP);
         txtCurp = new JTextField();
         panel.add(txtCurp);
 
         btnIniciarSesion = new JButton("Iniciar Sesión");
+        btnIniciarSesion.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnIniciarSesion.setBackground(new Color(46, 204, 113)); // verde
+        btnIniciarSesion.setForeground(Color.WHITE);
         panel.add(new JLabel()); // espacio vacío
         panel.add(btnIniciarSesion);
 

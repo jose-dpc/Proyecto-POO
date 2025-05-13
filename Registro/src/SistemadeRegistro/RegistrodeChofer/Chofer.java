@@ -5,14 +5,14 @@ public class Chofer {
     private int telefono;
     private String correo;
     private String curp;
-    private String estado; // "Pendiente", "Aprobado", "Rechazado"
+    private String estado; 
 
     public Chofer(String nombre, String correo, int telefono, String curp) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;
         this.curp = curp;
-        this.estado = "Pendiente"; // Al registrarse, siempre "Pendiente"
+        this.estado = "Pendiente";
     }
 
     // Getters y Setters

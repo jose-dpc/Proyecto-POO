@@ -53,6 +53,7 @@ public class RegistroChoferGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String[] datos = obtenerDatos();
                 RegistroChofer registro = new RegistroChofer(datos);
+                registro.actionPerformed(e);
                 registrarChofer();
             }
         });

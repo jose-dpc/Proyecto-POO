@@ -33,7 +33,7 @@ public class RegistroUsuario implements ActionListener {
             }
 
             // Inserción del nuevo usuario
-            String sql = "INSERT INTO \"Usuario-Informacion\" (ID, Nombre, Contraseña) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO \"Usuario-Informacion\" (ID, Nombre, Contrasena) VALUES (?, ?, ?)";
             try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
                 for (int i = 0; i < campos.length; i++) {
                     stmt.setString(i + 1, campos[i]);

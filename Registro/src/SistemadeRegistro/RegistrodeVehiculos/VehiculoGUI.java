@@ -1,16 +1,17 @@
 
 package SistemadeRegistro.RegistrodeVehiculos;
-import SistemadeRegistro.RegistrodeChofer.ControlFrameChofer;
 import SistemadeRegistro.SelecciondeRuta.SelecciondeRutaGUI;
+import SistemadeRegistro.BaseDeDatos.UsoDeBase.RegistroVehiculo;
+import SistemadeRegistro.RegistrodeChofer.ControlFrameChofer;
 import SistemadeRegistro.RegistrodeChofer.Chofer;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
 
 public class VehiculoGUI  extends JFrame{
     private Vehiculo vehiculo;
-    private JTextField marcaField, añoField, modeloField, kmField, rendimientoField, placaField, colorField, polizaField;
+    private JTextField txtIDDueño, txtMarca, txtAño, txtModelo, txtKmtraje, txtRendimiento, txtPlaca, txtColor, txtPoliza;
     private JTextArea resultadoArea;
     private Chofer chofer;
 
@@ -22,55 +23,66 @@ public class VehiculoGUI  extends JFrame{
         setTitle ("Registro de Vehículos");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
-        setLayout(new GridLayout(9, 2, 5, 5));
+        setLayout(new GridLayout(10, 2, 10, 10));
         setLocationRelativeTo(null);
         
-        // Las entradas
+        add(new JLabel("ID Dueño:"));
+        txtIDDueño = new JTextField();
+        add(txtIDDueño);
+
         add(new JLabel("Marca:"));
-        marcaField = new JTextField(10);
-        add(marcaField);
-
-        add(new JLabel("Modelo:"));
-        modeloField = new JTextField(10);
-        add(modeloField);
-
-        add(new JLabel("Placas:"));
-        placaField = new JTextField(10);
-        add(placaField);
-
-        add(new JLabel("Color:"));
-        colorField = new JTextField(10);
-        add(colorField);
+        txtMarca = new JTextField();
+        add(txtMarca);
 
         add(new JLabel("Año:"));
-        añoField = new JTextField(10);
-        add(añoField);
-        
+        txtAño = new JTextField();
+        add(txtAño);
+
+        add(new JLabel("Modelo:"));
+        txtModelo = new JTextField();
+        add(txtModelo);
+
         add(new JLabel("Kilometraje:"));
-        kmField = new JTextField(10);
-        add(kmField);
+        txtKmtraje = new JTextField();
+        add(txtKmtraje);
 
-        add(new JLabel("Rendimiento (km/L):"));
-        rendimientoField = new JTextField(10);
-        add(rendimientoField);
+        add(new JLabel("Rendimiento:"));
+        txtRendimiento = new JTextField();
+        add(txtRendimiento);
 
-        add(new JLabel("Poliza de Seguro:"));
-        polizaField = new JTextField(10);
-        add(polizaField);
+        add(new JLabel("Placa:"));
+        txtPlaca = new JTextField();
+        add(txtPlaca);
+
+        add(new JLabel("Color:"));
+        txtColor = new JTextField();
+        add(txtColor);
+
+        add(new JLabel("Poliza:"));
+        txtPoliza = new JTextField();
+        add(txtPoliza);
         
         // Botón del GUI
-        JButton registrarBtn = new JButton("Registrar Vehiculo");
+        JButton registrarBtn = new JButton("Registrar Vehículo");
         add(registrarBtn);
         
-        resultadoArea = new JTextArea(10,40);
+        resultadoArea = new JTextArea(5, 40);
         resultadoArea.setEditable(false);
-        resultadoArea.setText("Ingrese sus valores y presione el botón");
+        resultadoArea.setText("Ingrese los datos del vehículo y presione el botón.");
         JScrollPane scrollPane = new JScrollPane(resultadoArea);
         add(scrollPane);
         
         registrarBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String[] datos = obtenerDatos();
+                if (validarCampos(datos)) {
+                    RegistroVehiculo registro = new RegistroVehiculo(datos);
+                    registro.registrarVehiculo();
+                    resultadoArea.setText("Vehículo registrado exitosamente.");
+                } else {
+                    resultadoArea.setText("Por favor, complete todos los campos correctamente.");
+                }
                 boolean exito = registrarVehiculo();
                 if (exito) {
                     dispose();  // Cierra esta ventana
@@ -82,24 +94,63 @@ public class VehiculoGUI  extends JFrame{
         
         setVisible(true);
     }
+    private String[] obtenerDatos() {
+        return new String[]{
+            txtIDDueño.getText().trim(),
+            txtMarca.getText().trim(),
+            txtAño.getText().trim(),
+            txtModelo.getText().trim(),
+            txtKmtraje.getText().trim(),
+            txtRendimiento.getText().trim(),
+            txtPlaca.getText().trim(),
+            txtColor.getText().trim(),
+            txtPoliza.getText().trim()
+        };
+    }
+    private boolean validarCampos(String[] datos) {
+        try {
+            // Validar que todos los campos estén llenos
+            for (String campo : datos) {
+                if (campo == null || campo.isEmpty()) {
+                    return false;
+                }
+            }
+
+            
+            // Validar que los campos numéricos sean válidos
+            int idDueño = Integer.parseInt(datos[0]);
+            int año = Integer.parseInt(datos[2]);
+            int kmtraje = Integer.parseInt(datos[4]);
+            int rendimiento = Integer.parseInt(datos[5]);
+            if (idDueño <= 0 || año <= 0 || kmtraje < 0 || rendimiento <= 0) {
+                throw new NumberFormatException("Los valores numéricos deben ser positivos.");
+            }
+
+            return true;
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Error: Verifique que los valores numéricos sean válidos.",
+                    "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
     
     private boolean registrarVehiculo() {
         try {
             // Asegurar que ninguno de los campos este vacio
-            String marca = marcaField.getText().trim();
-            String modelo = modeloField.getText().trim();
-            String color = colorField.getText().trim();
-            String poliza = polizaField.getText().trim();
-            String placas = placaField.getText().trim();
+            String marca = txtMarca.getText().trim();
+            String modelo = txtModelo.getText().trim();
+            String color = txtColor.getText().trim();
+            String poliza = txtPoliza.getText().trim();
+            String placas = txtPlaca.getText().trim();
 
             if (marca.isEmpty() || modelo.isEmpty()){
                 resultadoArea.setText("Por favor ingresar valores para marca y modelo");
                 return false;
             }
 
-            int año =  añoField.getText().isEmpty() ? vehiculo.getAño() : Integer.parseInt(añoField.getText());
-            int km =  kmField.getText().isEmpty() ? vehiculo.getKm() : Integer.parseInt(kmField.getText());
-            int rendimiento = rendimientoField.getText().isEmpty() ? vehiculo.getRendimiento() : Integer.parseInt(rendimientoField.getText());
+            int año =  txtAño.getText().isEmpty() ? vehiculo.getAño() : Integer.parseInt(txtAño.getText());
+            int km =  txtKmtraje.getText().isEmpty() ? vehiculo.getKm() : Integer.parseInt(txtKmtraje.getText());
+            int rendimiento = txtRendimiento.getText().isEmpty() ? vehiculo.getRendimiento() : Integer.parseInt(txtRendimiento.getText());
             
             vehiculo.setMarca(marca);
             vehiculo.setAño(año);

@@ -59,8 +59,8 @@ public class ControlFrameEstudiante extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 String[] datos = obtenerDatos();
                 RegistroUsuario registro = new RegistroUsuario(datos);
+                registro.actionPerformed(e);
                 verificarEstudiante();
-                System.exit(0);
             }
         });
 

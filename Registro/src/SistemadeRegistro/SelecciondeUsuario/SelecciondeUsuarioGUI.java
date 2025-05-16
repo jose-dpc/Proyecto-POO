@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import SistemadeRegistro.RegistrodeChofer.ChoferLogReg;
-import SistemadeRegistro.RegistrodeEstudiantes.ControlFrameEstudiante;
+import SistemadeRegistro.RegistrodeEstudiantes.LoginEstudianteGUI;
 
 
 public class SelecciondeUsuarioGUI extends JFrame {
@@ -47,7 +47,7 @@ public class SelecciondeUsuarioGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                ControlFrameEstudiante estudianteGUI = new ControlFrameEstudiante(SelecciondeUsuarioGUI.this);
+                LoginEstudianteGUI estudianteGUI = new LoginEstudianteGUI(SelecciondeUsuarioGUI.this);
                 estudianteGUI.setVisible(true);
             }
         });

@@ -1,17 +1,21 @@
 package SistemadeRegistro.RegistrodeChofer;
 
+import SistemadeRegistro.Rutas.ControlFrameRuta;
+import SistemadeRegistro.UnirseaRuta.UnirseAUnaRuta;
+import SistemadeRegistro.RegistrodeVehiculos.VehiculoGUI;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ControlFrameChofer extends JFrame {
-    private Chofer choferActual; // Chofer actualmente autenticado
+    private Chofer choferActual;
 
     public ControlFrameChofer() {
-        inicializarInterfaz(); // método donde configuras tu GUI de registro
+        inicializarInterfaz();
     }
-    
+
     public ControlFrameChofer(Chofer chofer) {
         this.choferActual = chofer;
         inicializarInterfaz();
@@ -24,75 +28,53 @@ public class ControlFrameChofer extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(5, 1, 10, 10)); // 5 botones, 10px separación
+        panel.setLayout(new GridLayout(5, 1, 10, 10));
 
-        // Crear botones
         JButton btnRegistrarVehiculo = new JButton("Registrar Vehículo");
-        btnRegistrarVehiculo.setFont(new Font("Arial", Font.PLAIN, 14));
-        btnRegistrarVehiculo.setBackground(new Color(243, 156, 18)); // Naranja
-        btnRegistrarVehiculo.setForeground(Color.WHITE);
+        configurarBoton(btnRegistrarVehiculo);
+
         JButton btnCrearRuta = new JButton("Crear Ruta Nueva");
-        btnCrearRuta.setFont(new Font("Arial", Font.PLAIN, 14));
-        btnCrearRuta.setBackground(new Color(243, 156, 18)); // Naranja
-        btnCrearRuta.setForeground(Color.WHITE);
+        configurarBoton(btnCrearRuta);
+
         JButton btnUnirseRuta = new JButton("Unirse a Ruta Existente");
-        btnUnirseRuta.setFont(new Font("Arial", Font.PLAIN, 14));
-        btnUnirseRuta.setBackground(new Color(243, 156, 18)); // Naranja
-        btnUnirseRuta.setForeground(Color.WHITE);
+        configurarBoton(btnUnirseRuta);
+
         JButton btnEliminarRuta = new JButton("Eliminar Ruta");
-        btnEliminarRuta.setFont(new Font("Arial", Font.PLAIN, 14));
-        btnEliminarRuta.setBackground(new Color(243, 156, 18)); // Naranja
-        btnEliminarRuta.setForeground(Color.WHITE);
+        configurarBoton(btnEliminarRuta);
+
         JButton btnCerrarSesion = new JButton("Cerrar Sesión");
-        btnCerrarSesion.setFont(new Font("Arial", Font.PLAIN, 14));
-        btnCerrarSesion.setBackground(new Color(243, 156, 18)); // Naranja
-        btnCerrarSesion.setForeground(Color.WHITE);
+        configurarBoton(btnCerrarSesion);
 
-        // Agregar listeners a botones
-        btnRegistrarVehiculo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (choferAutorizado()) {
-                    abrirVentanaRegistroVehiculo();
-                }
+        btnRegistrarVehiculo.addActionListener(e -> {
+            if (choferAutorizado()) {
+                abrirVentanaRegistroVehiculo();
             }
         });
 
-        btnCrearRuta.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (choferAutorizado()) {
-                    abrirVentanaCrearRuta();
-                }
+        btnCrearRuta.addActionListener(e -> {
+            if (choferAutorizado()) {
+                new ControlFrameRuta(this);
+                dispose();
             }
         });
 
-        btnUnirseRuta.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (choferAutorizado()) {
-                    abrirVentanaUnirseRuta();
-                }
+        btnUnirseRuta.addActionListener(e -> {
+            if (choferAutorizado()) {
+                new UnirseAUnaRuta(this);
+                dispose();
             }
         });
 
-        btnEliminarRuta.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (choferAutorizado()) {
-                    abrirVentanaEliminarRuta();
-                }
+        btnEliminarRuta.addActionListener(e -> {
+            if (choferAutorizado()) {
+                abrirVentanaEliminarRuta();
             }
         });
 
-        btnCerrarSesion.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cerrarSesion();
-            }
+        btnCerrarSesion.addActionListener(e -> {
+            cerrarSesion();
         });
 
-        // Agregar los botones al panel
         panel.add(btnRegistrarVehiculo);
         panel.add(btnCrearRuta);
         panel.add(btnUnirseRuta);
@@ -103,37 +85,35 @@ public class ControlFrameChofer extends JFrame {
         setVisible(true);
     }
 
+    private void configurarBoton(JButton boton) {
+        boton.setFont(new Font("Arial", Font.PLAIN, 14));
+        boton.setBackground(new Color(243, 156, 18));
+        boton.setForeground(Color.WHITE);
+    }
+
     private boolean choferAutorizado() {
-        if (!choferActual.getEstado().equalsIgnoreCase("Aprobado")) {
-            JOptionPane.showMessageDialog(this, "No puedes continuar. Debes asistir a tu entrevista y ser aprobado primero.");
+        if (choferActual == null || !choferActual.getEstado().equalsIgnoreCase("Aprobado")) {
+            JOptionPane.showMessageDialog(this,
+                    "No puedes continuar. Debes asistir a tu entrevista y ser aprobado primero.",
+                    "Acceso Denegado",
+                    JOptionPane.WARNING_MESSAGE);
             return false;
         }
         return true;
     }
 
     private void abrirVentanaRegistroVehiculo() {
-        // Aquí se abriría la ventana real de registro de vehículo
-        JOptionPane.showMessageDialog(this, "Aquí se abriría la ventana de registro de vehículo.");
-    }
-
-    private void abrirVentanaCrearRuta() {
-        // Aquí se abriría la ventana real de crear una nueva ruta
-        JOptionPane.showMessageDialog(this, "Aquí se abriría la ventana para crear una nueva ruta.");
-    }
-
-    private void abrirVentanaUnirseRuta() {
-        // Aquí se abriría la ventana real para unirse a una ruta existente
-        JOptionPane.showMessageDialog(this, "Aquí se abriría la ventana para unirse a una ruta existente.");
+        new VehiculoGUI(this, choferActual);
+        dispose();
     }
 
     private void abrirVentanaEliminarRuta() {
-        // Aquí se abriría la ventana real para eliminar una ruta
         JOptionPane.showMessageDialog(this, "Aquí se abriría la ventana para eliminar una ruta.");
     }
 
     private void cerrarSesion() {
-        JOptionPane.showMessageDialog(this, "Sesión cerrada. Regresando al menú principal.");
+        JOptionPane.showMessageDialog(this, "Sesión cerrada. Regresando al login de chofer.");
         dispose();
-        // Aquí deberías redirigir a la pantalla de login o menú principal
+        new LoginChoferGUI(); // Asegúrate de tener esta clase
     }
 }

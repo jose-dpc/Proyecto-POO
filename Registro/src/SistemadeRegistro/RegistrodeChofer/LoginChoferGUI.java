@@ -13,6 +13,7 @@ public class LoginChoferGUI extends JFrame {
         inicializarInterfaz();
     }
 
+
     private void inicializarInterfaz() {
         setTitle("Iniciar Sesión Chofer");
         setSize(400, 150);
@@ -44,6 +45,10 @@ public class LoginChoferGUI extends JFrame {
         });
 
         setVisible(true);
+    }
+
+    //constructor vacio
+    public LoginChoferGUI(JFrame parentFrame) {
     }
 
     private void iniciarSesion() {

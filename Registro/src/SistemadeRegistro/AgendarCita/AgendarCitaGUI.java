@@ -135,7 +135,7 @@ public class AgendarCitaGUI extends JFrame {
         }
 
         // Si todo es válido
-        JOptionPane.showMessageDialog(this, "¡Cita agendada exitosamente!\nMatrícula: " + correo +
+        JOptionPane.showMessageDialog(this, "¡Cita agendada exitosamente!\nCorreo: " + correo +
                 "\nFecha: " + fecha + "\nHora: " + hora);
 
         dispose(); // Cierra la ventana después de agendar

@@ -53,14 +53,14 @@ public class ControlFrameChofer extends JFrame {
 
         btnCrearRuta.addActionListener(e -> {
             if (choferAutorizado()) {
-                new ControlFrameRuta(this);
+                new ControlFrameRuta(this, choferActual);
                 dispose();
             }
         });
 
         btnUnirseRuta.addActionListener(e -> {
             if (choferAutorizado()) {
-                new UnirseAUnaRuta(this);
+                new UnirseAUnaRuta(this, choferActual);
                 dispose();
             }
         });

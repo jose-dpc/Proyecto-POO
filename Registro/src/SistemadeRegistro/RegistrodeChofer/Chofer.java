@@ -12,7 +12,7 @@ public class Chofer {
         this.telefono = telefono;
         this.correo = correo;
         this.curp = curp;
-        this.estado = "Pendiente"; // Al registrarse, siempre "Pendiente"
+        this.estado = "Aprobado"; // Al registrarse, siempre "Pendiente"
     }
 
     // Getters y Setters
